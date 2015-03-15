@@ -44,11 +44,20 @@ public class TuringBand {
 		} else if (direction < 0) {
 			if (head.previous == null) {
 				TupleElement newFirstElement = new TupleElement(null, null, firstElement);
+				firstElement.previous = newFirstElement;
 				firstElement = newFirstElement;
 			}
 			head = head.previous;
 		} else {
 			throw new IllegalArgumentException("invalid move");
+		}
+		if (firstElement.content == null && head != firstElement) {
+			firstElement = firstElement.next;
+			firstElement.previous = null;
+		}
+		if (lastElement.content == null && head != lastElement) {
+			lastElement = lastElement.previous;
+			lastElement.next = null;
 		}
 	}
 	
@@ -61,7 +70,7 @@ public class TuringBand {
 				str += "[[HEAD]]";
 			}
 			if (iterator.content == null) {
-				str += "NULL";
+				str += "NULL ";
 			} else {
 				str += iterator.content + " ";
 			}
