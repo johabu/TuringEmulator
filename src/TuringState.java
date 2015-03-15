@@ -1,3 +1,4 @@
+import java.lang.reflect.MalformedParametersException;
 import java.util.ArrayList;
 
 public class TuringState {
@@ -13,10 +14,16 @@ public class TuringState {
 	public void addState(int id, ArrayList<String> writeSymbols, ArrayList<Integer> directions, ArrayList<Integer> newStates) {
 		if (writeSymbols.size() == directions.size() && writeSymbols.size() == newStates.size() && writeSymbols.size() == alphabet.size() ) {
 			for (int i = 0; i < alphabet.size(); i++) {
-				function[id][i][0] = writeSymbols.get(i);
-				function[id][i][1] = directions.get(i);
-				function[id][i][2] = newStates.get(i);
+				if (directions.get(i) != null && newStates.get(i) != null) {
+					function[id][i][0] = writeSymbols.get(i);
+					function[id][i][1] = directions.get(i);
+					function[id][i][2] = newStates.get(i);
+				} else {
+					function[id][i] = null;
+				}
 			}
+		} else {
+			throw new IllegalArgumentException();
 		}
 	}
 	
