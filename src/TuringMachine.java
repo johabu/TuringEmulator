@@ -8,12 +8,14 @@ public class TuringMachine {
 	
 	private int currentState;
 	private boolean terminated;
+	private int steps;
 	
 	public TuringMachine(ArrayList<String> initialBand, ArrayList<String> alphabet, int numberOfStates, int startState) {
 		band = new TuringBand(initialBand);
 		states = new TuringState(alphabet, numberOfStates);
 		currentState = startState;
 		terminated = false;
+		steps = 0;
 	}
 	
 	public TuringMachine(String[] initialBand, String[] alphabet, int numberOfStates, int startState) {
@@ -23,6 +25,7 @@ public class TuringMachine {
 		states = new TuringState(a, numberOfStates);
 		currentState = startState;
 		terminated = false;
+		steps = 0;
 	}
 	
 	public void addStateFunction(int state, String[] write, Integer[] dir, Integer[] newStates) {
@@ -43,16 +46,21 @@ public class TuringMachine {
 		} else {
 			terminated = true;
 		}
+		steps++;
 	}
 	
 	public String printBand() {
-		String str = band.printBand();
+		String str = "\t" + band.printBand();
 		str = str.replaceAll("\\[HEAD\\]", "s" + Integer.toString(currentState));
 		return str;
 	}
 	
 	public boolean isTerminated() {
 		return terminated;
+	}
+	
+	public int steps() {
+		return steps;
 	}
 	
 }
